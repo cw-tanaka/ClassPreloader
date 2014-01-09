@@ -102,7 +102,17 @@ class ClassLoader
                     $files[] = $name;
                 }
             }
-            $files[] = $r->getFileName();
+
+            // check Parent class
+            $p = $r->getParentClass();
+            if ($p && in_array($p->getFileName(), $files)) {
+                $files[] = $p->getFileName();
+            }
+
+            if (in_array($r->getFileName(), $files)) {
+                $files[] = $r->getFileName();
+            }
+
         }
 
         return $files;
